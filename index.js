@@ -36,7 +36,6 @@ app.get("/api/data/:url", async (req, res) => {
     const request = await axios.request({
       method: "get",
       url: url,
-      timeout: 20000, //optional
       httpsAgent: new https.Agent({ keepAlive: true }),
       headers: header,
     });
