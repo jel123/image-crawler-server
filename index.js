@@ -2,6 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const express = require("express");
 const cors = require("cors");
+const https = require("https");
 // helper
 const helper = require("./helper");
 
@@ -35,6 +36,8 @@ app.get("/api/data/:url", async (req, res) => {
     const request = await axios.request({
       method: "get",
       url: url,
+      timeout: 60000, //optional
+      httpsAgent: new https.Agent({ keepAlive: true }),
       headers: header,
     });
 

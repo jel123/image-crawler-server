@@ -26,6 +26,7 @@ module.exports = {
   getFileDimension: (urlParam) => {
     const options = url.parse(urlParam);
     const client = options.protocol === "https:" ? https : http;
+    console.log(client);
     return new Promise((resolve, reject) => {
       client.get(options, function (response) {
         const chunks = [];
