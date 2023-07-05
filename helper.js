@@ -1,9 +1,7 @@
 const axios = require("axios");
 const path = require("path");
-const sizeOf = require("image-size");
 const url = require("url");
-const http = require("http");
-const https = require("https");
+const probe = require("probe-image-size");
 
 module.exports = {
   getFileSize: async (url) => {
@@ -23,25 +21,14 @@ module.exports = {
     const extension = path.extname(url);
     return extension.substring(1);
   },
-  getFileDimension: (urlParam) => {
+  getFileDimension: async (urlParam) => {
     const options = url.parse(urlParam);
-    const client = options.protocol === "https:" ? https : http;
-    console.log(client);
-    return new Promise((resolve, reject) => {
-      client.get(options, function (response) {
-        const chunks = [];
-        response
-          .on("data", function (chunk) {
-            chunks.push(chunk);
-          })
-          .on("end", function () {
-            const buffer = Buffer.concat(chunks);
-            resolve(sizeOf(buffer));
-          })
-          .on("error", (error) => {
-            reject(error);
-          });
-      });
-    });
+    if ((options.protocol === "https:") | (options.protocol === "http:")) {
+      let result = await probe(urlParam, { rejectUnauthorized: false });
+      return {
+        width: result.width,
+        height: result.height,
+      };
+    }
   },
 };

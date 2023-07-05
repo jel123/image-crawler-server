@@ -36,7 +36,6 @@ app.get("/api/data/:url", async (req, res) => {
     const request = await axios.request({
       method: "get",
       url: url,
-      timeout: 60000, //optional
       httpsAgent: new https.Agent({ keepAlive: true }),
       headers: header,
     });
@@ -59,7 +58,7 @@ app.get("/api/data/:url", async (req, res) => {
     crawledImages.push(imageData);
     res.status(200).send(crawledImages);
   } catch (error) {
-    console.log(error);
+    console.log("THIS IS ERROR:", error);
     return res.status(400).send("error: " + error.toString());
   }
 });
