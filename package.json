@@ -19,6 +19,7 @@
     "express": "^4.18.2",
     "image-size": "^1.0.2",
     "nodemon": "^2.0.22",
+    "probe-image-size": "^7.2.3",
     "sharp": "^0.32.1"
   }
 }
